@@ -1,1 +1,3 @@
-# testing-strategies
+## Epidemic simulations and testing
+
+This repository hosts source code for the paper submission "Cautionary Tales of Contact Tracing Across Multiple Epidemics and the Promise of Intelligent Testing Strategies for the Future". The code can be used to simulate compartmental epidemic models over random networks. The simulation code was originally from this [work](https://github.com/springer-math/Mathematics-of-Epidemics-on-Networks) with modifications for including tracing and testing of epidemics.
