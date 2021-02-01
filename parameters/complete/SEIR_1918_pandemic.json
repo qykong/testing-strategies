@@ -1,0 +1,18 @@
+{
+    "type": "complete",
+    "p2bCTs": {"S": 1.0, "E": 1.0, "I": 1.0, "R": 1.0},
+    "p2bRTs": {"S": 1.0, "E": 1.0, "I": 1.0, "R": 1.0},
+    "positive_instantaneous": [],
+    "positive_induced": ["I", "E"],
+    "to_trace_instantaneous": ["I"],
+    "recovered": ["R"],
+    "infected": ["I"],
+    "rate_I2R": 0.243902439,
+    "rate_E2I": 0.5263157895,
+    "rate_IS2IE": 0.487804878,
+    "return_statuses": ["S", "I", "R"],
+    "gH": ["S", ["E", "I", "rate_E2I"], ["I", "R", "rate_I2R"]],
+    "J": [[["I", "S"], ["I", "E"], "rate_IS2IE"]],
+    "_comment1": "From paper: Transmissibility of 1918 pandemic influenza",
+    "_comment2": "reported R0: 2"
+}

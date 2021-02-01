@@ -1,0 +1,20 @@
+{
+    "type": "complete",
+    "p2bCTs": {"S": 1.0, "E": 1.0, "I": 1.0, "R": 1.0, "Ho": 0},
+    "p2bRTs": {"S": 1.0, "E": 1.0, "I": 1.0, "R": 1.0, "Ho": 0},
+    "positive_instantaneous": ["Ho"],
+    "positive_induced": ["E", "I"],
+    "to_trace_instantaneous": ["I"],
+    "initial_infection_status": "E",
+    "recovered": ["R", "Ho"],
+    "infected": ["I"],
+    "rate_I2R": 0.03411572,
+    "rate_E2I": 0.1,
+    "rate_IS2IE": 0.15,
+    "rate_I2Ho": 0.09088428,
+    "return_statuses": ["S", "E", "I", "Ho"],
+    "gH": ["S", ["E", "I", "rate_E2I"], ["I", "R", "rate_I2R"], ["I", "Ho", "rate_I2Ho"]],
+    "J": [[["I", "S"], ["I", "E"], "rate_IS2IE"]],
+    "_comment1": "From paper: ",
+    "_comment2": "reported R0: 1.2"
+}

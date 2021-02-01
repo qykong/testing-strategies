@@ -1,0 +1,19 @@
+{
+    "type": "complete",
+    "p2bCTs": {"S": 1.0, "E": 1.0, "I": 1.0, "R": 1.0},
+    "p2bRTs": {"S": 1.0, "E": 1.0, "I": 1.0, "R": 1.0},
+    "positive_instantaneous": [],
+    "positive_induced": ["E", "I"],
+    "to_trace_instantaneous": ["I"],
+    "initial_infection_status": "E",
+    "recovered": ["R"],
+    "infected": ["I"],
+    "rate_I2R": 0.143,
+    "rate_E2I": 0.2,
+    "rate_IS2IE": 0.2,
+    "return_statuses": ["S", "I", "R"],
+    "gH": ["S", ["E", "I", "rate_E2I"], ["I", "R", "rate_I2R"]],
+    "J": [[["I", "S"], ["I", "E"], "rate_IS2IE"]],
+    "_comment1": "From paper: Statistical inference in a stochastic epidemic SEIR model with control intervention: Ebola as a case study",
+    "_comment2": "Reported R0: 1.4"
+}

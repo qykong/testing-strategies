@@ -1,0 +1,17 @@
+{
+    "type": "complete",
+    "p2bCTs": {"S": 1.0, "I": 1.0, "R": 1.0},
+    "p2bRTs": {"S": 1.0, "I": 1.0, "R": 1.0},
+    "positive_instantaneous": [],
+    "positive_induced": ["I"],
+    "to_trace_instantaneous": ["I"],
+    "recovered": ["R"],
+    "infected": ["I"],
+    "rate_I2R": 0.1428571429,
+    "rate_IS2II": 0.19,
+    "return_statuses": ["S", "I", "R"],
+    "gH": ["S", ["I", "R", "rate_I2R"]],
+    "J": [[["I", "S"], ["I", "I"], "rate_IS2II"]],
+    "_comment1": "From paper: Estimation of the Basic Reproduction Number of Novel Influenza A (H1N1) pdm09 in Elementary Schools Using the SIR Model",
+    "_comment2": "reported R0: 1.33"
+}
