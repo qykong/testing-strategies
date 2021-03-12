@@ -60,9 +60,6 @@ class Tracer(object):
         self.tmax = tmax
         # tracing_day
         self.tday = tmin
-        
-        # save k-core values beforehand
-        self.G_kcores = nx.core_number(G)
 
         # tabu list for tracing
         self.tlist = set()  # a set of nodes who cannot be traced due to tabu
@@ -156,7 +153,7 @@ class DefaultTracer(Tracer):
         """
         super().__init__(num_tracers, pC2T, pQ, p2bCTs, p2bRTs, positive_instantaneous, positive_induced,
                          tlist_size, to_trace_instantaneous, p2bPITs)
-        if oracle_type.lower() not in ['noneback', 'none', 'oracletracer', 'oracle', 'random', 'backoracletracer', 'kcorecontact']:
+        if oracle_type.lower() not in ['noneback', 'none', 'oracletracer', 'oracle', 'random', 'backoracletracer']:
             raise Exception('oracle type not found!')
 
         # add a new variable for checking backward tracing depth
@@ -165,7 +162,7 @@ class DefaultTracer(Tracer):
         self.pCT = pCT
         self.pRT = pRT
         self.trace_depth = trace_depth
-        
+
         # list of tracers per day (nCT,nRT)
         self.tracers_day = []
 
@@ -264,13 +261,7 @@ class DefaultTracer(Tracer):
         # update tracers per day
         self.tracers_day.append((nCT, nRT))
         # do random tracing here
-        if self.oracle_type.lower() == 'kcorecontact':
-            available_nodes_to_trace_list = list(available_nodes_to_trace)
-            available_nodes_to_trace_list_p = np.array([self.G_kcores[node] for node in available_nodes_to_trace_list])
-            sampled_nodes = np.random.choice(available_nodes_to_trace_list, size=nRT, replace=False,
-                                             p=available_nodes_to_trace_list_p/sum(available_nodes_to_trace_list_p))
-        else:
-            sampled_nodes = random.sample(available_nodes_to_trace, nRT)
+        sampled_nodes = random.sample(available_nodes_to_trace, nRT)
         for n2t in sampled_nodes:
             if n2t in self.ctd or n2t in self.tlist:
                 print('error')
