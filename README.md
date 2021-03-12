@@ -33,8 +33,9 @@ Average Ratio of Positive Random Tracing 0.007462874786371902
 
 A complete list of arguments that are avaialbe from `main.py` can be found with `python3 main.py -pf parameters/abstract/SIR_with_Ho.json -h`.
 ```
-usage: main.py [-h] [-seed SEED] [-nt NETWORK_TYPE] [-np NETWORK_PARAMS] [-oracle_type ORACLE_TYPE] [-num_tracers NUM_TRACERS] [-nxIts NXITS] [-simIts SIMITS] [-of OF] [-return_full_data RETURN_FULL_DATA] [-parallel PARALLEL]
-               [-num_nodes NUM_NODES] [-pC2T PC2T] [-pQ PQ] [-pCT PCT] [-pRT PRT] [-tlist_size TLIST_SIZE] [-nI NI] [-maxdays MAXDAYS] [-N N] -rate_I2R RATE_I2R -rate_IS2II RATE_IS2II -rate_I2Ho RATE_I2HO
+usage: main.py [-h] [-seed SEED] [-nt NETWORK_TYPE] [-np NETWORK_PARAMS] [-oracle_type ORACLE_TYPE] [-num_tracers NUM_TRACERS] [-nxIts NXITS] [-simIts SIMITS] [-of OF] [-return_full_data RETURN_FULL_DATA]
+               [-parallel PARALLEL] [-num_nodes NUM_NODES] [-pC2T PC2T] [-pQ PQ] [-pCT PCT] [-pRT PRT] [-tlist_size TLIST_SIZE] [-nI NI] [-maxdays MAXDAYS] [-N N] -rate_I2R RATE_I2R -rate_IS2II RATE_IS2II -rate_I2Ho
+               RATE_I2HO
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -44,7 +45,7 @@ optional arguments:
   -np NETWORK_PARAMS, --network-params NETWORK_PARAMS
                         specify the network parameter to use
   -oracle_type ORACLE_TYPE
-                        type of oracle to use
+                        type of oracle to use, one of "backward", "forward", "oracletracer", "globaloracle", "random"
   -num_tracers NUM_TRACERS
                         number of tracers
   -nxIts NXITS          number of iterations of random networks
@@ -54,4 +55,15 @@ optional arguments:
                         Determine if individual transimissions are tracked (This will introduce additional computational overhead)
   -parallel PARALLEL    Run simulation in parallel.
   -num_nodes NUM_NODES  number of first set of nodes selected for computing secondary infections
+  -pC2T PC2T
+  -pQ PQ
+  -pCT PCT
+  -pRT PRT
+  -tlist_size TLIST_SIZE
+  -nI NI
+  -maxdays MAXDAYS
+  -N N
+  -rate_I2R RATE_I2R
+  -rate_IS2II RATE_IS2II
+  -rate_I2Ho RATE_I2HO
 ```
