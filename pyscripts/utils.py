@@ -257,9 +257,9 @@ def run_single_simulation(G, J, N, gH, infected, initial_infection_status, maxda
     if oracle_type is None:
         if oracle is None and oracleTracer is None:
             raise Exception('all oracle settings are None!')
-        oracle_type = 'none'
+        oracle_type = 'forward'
         if oracle:
-            oracle_type = 'oracle'
+            oracle_type = 'globaloracle'
         elif oracleTracer:
             oracle_type = 'oracletracer'
     if oracle_type == 'random':

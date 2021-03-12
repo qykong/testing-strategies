@@ -53,7 +53,7 @@ if __name__ == '__main__':
     p.add_argument("-seed", type=int, default=-1, help='seed (if not specified seed is random')
     p.add_argument("-nt", "--network-type", type=str, default='er', help='specify the network simulator to use')
     p.add_argument("-np", "--network-params", type=str, default=None, help='specify the network parameter to use')
-    p.add_argument("-oracle_type", type=str, default=None, help='type of oracle to use')
+    p.add_argument("-oracle_type", type=str, default=None, help='type of oracle to use, one of "backward", "forward", "oracletracer", "globaloracle", "random"')
     p.add_argument("-num_tracers", type=int, default=0, help='number of tracers')
     p.add_argument("-nxIts", type=int, default=1, help='number of iterations of random networks')
     p.add_argument("-simIts", type=int, default=1, help='number of simulations per random network')
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     p.add_argument("-return_full_data", type=str2bool, default=True, help='Determine if individual transimissions are tracked (This will introduce additional computational overhead)')
     p.add_argument("-parallel", type=str2bool, default=False, help='Run simulation in parallel.')
     p.add_argument("-num_nodes", type=int, default=0, help='number of first set of nodes selected for computing secondary infections')
-    p.add_argument("-reintroduction_nums", type=int, default=0, help='number of infections at each re-introduction')
+
     for param in tracing_parameters:
         if isinstance(tracing_parameters[param], (int, float, bool)):
             p.add_argument('-'+param, type=type(tracing_parameters[param]), default=None)

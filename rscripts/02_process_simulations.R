@@ -11,7 +11,7 @@ source('rscripts/utils.R')
 chosen_disease <- 'SEIR_with_Ho'
 # convert strategy names to their correct once in paper
 swap_tracing_types <- list('forward tracing', 'back tracing', 'global oracle', 'oracle tracer', 'random', 'oracle backward tracer') %>% #
-  set_names(c('none', 'noneback', 'oracle', 'oracleTracer', 'random', 'backOracleTracer'))
+  set_names(c('forward', 'backward', 'globaloracle', 'oracleTracer', 'random', 'backOracleTracer'))
 if (chosen_disease == 'SIR_with_Ho') {
   simulation_parameter_names <- c('disease', 'N', 'num_tracers', 'type', 'init_infects',
                                 'rate_IS2II' ,'rate_I2R', 'R0', 'dispersion', 'HoP',

@@ -148,12 +148,12 @@ class DefaultTracer(Tracer):
     def __init__(self, num_tracers, pC2T, pQ, p2bCTs, p2bRTs, positive_instantaneous, positive_induced,
                  tlist_size, to_trace_instantaneous, oracle_type, pCT, p2bPITs=dict(), pRT=1, trace_depth=1):
         """
-        :param oracle_type: type of oracles to use, one of the ('none', 'oracle', 'oracleTracer')
+        :param oracle_type: type of oracles to use, one of the ('forward', 'globaloracle', 'oracleTracer')
         :param pCT: percentages of tracers doing contact tracing
         """
         super().__init__(num_tracers, pC2T, pQ, p2bCTs, p2bRTs, positive_instantaneous, positive_induced,
                          tlist_size, to_trace_instantaneous, p2bPITs)
-        if oracle_type.lower() not in ['noneback', 'none', 'oracletracer', 'oracle', 'random', 'backoracletracer']:
+        if oracle_type.lower() not in ['backward', 'forward', 'oracletracer', 'globaloracle', 'random']:
             raise Exception('oracle type not found!')
 
         # add a new variable for checking backward tracing depth
@@ -167,20 +167,20 @@ class DefaultTracer(Tracer):
         self.tracers_day = []
 
     def c2t_if_oracle(self, n2t):
-        if self.oracle_type.lower() == 'oracle' and self.status in self.to_trace_instantaneous:
+        if self.oracle_type.lower() == 'globaloracle' and self.status in self.to_trace_instantaneous:
             if n2t not in self.ctd and n2t not in self.c2t and n2t not in self.tlist:
                 rt = random.random()
                 if rt < self.p2bCTs[self.status]:
                     self.c2t[n2t] = 1
 
     def find_out_contacts(self, n2t):
-        if self.oracle_type.lower() != 'oracle':
+        if self.oracle_type.lower() != 'globaloracle':
             for nbr in self.G.neighbors(n2t):
                 rt = random.random()
                 if rt < self.pC2T:  # the neighbor node is discovered
                     if nbr not in self.ctd and nbr not in self.c2t and nbr not in self.tlist:
                         self.node_trace_depth[nbr] = self.node_trace_depth[n2t] + 1
-                        if (self.oracle_type.lower() == 'noneback' or self.oracle_type.lower() == 'backoracletracer') and self.node_trace_depth[n2t] < self.trace_depth:
+                        if (self.oracle_type.lower() == 'backward') and self.node_trace_depth[n2t] < self.trace_depth:
                             # backward tracing
                             self.c2t[nbr] = 1
                             self.c2t.move_to_end(nbr, last=False)
@@ -225,7 +225,7 @@ class DefaultTracer(Tracer):
         ###### Start Contact/Random tracing ######
         CTpos = 0
         RTpos = 0
-        if self.oracle_type.lower() == 'oracletracer' or self.oracle_type.lower() == 'backoracletracer':  # oracle tracing
+        if self.oracle_type.lower() == 'oracletracer':  # oracle tracing
             pc2t = self.orderC2T()
         else:
             pc2t = len(self.c2t)
@@ -292,7 +292,7 @@ class DefaultTracer(Tracer):
     def action_on_new_event(self, new_status, n2t):
         # if node in ctd already, it has been traced, contacts discovered and attempted to quarantine, we do not
         # try again
-        if self.oracle_type.lower() == 'oracle' and new_status in self.to_trace_instantaneous:
+        if self.oracle_type.lower() == 'globaloracle' and new_status in self.to_trace_instantaneous:
             if n2t not in self.ctd and n2t not in self.c2t and n2t not in self.tlist:
                 self.c2t[n2t] = 1
         self.status_in_positive_instantaneous(new_status, n2t)
