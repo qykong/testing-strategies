@@ -24,9 +24,12 @@ def generate_init_infections(nI, N, initial_infection_status):
 def generate_contact_networks(N, network_type, network_params=None):
     if type(network_params) is str:
         network_params = json.loads(network_params)
-    if network_type == 'poisson' or network_type == 'poisson_gamma':
+    if network_type == 'er' or network_type == 'er_gamma':
         if network_params is not None:
-            G = nx.fast_gnp_random_graph(N, network_params['p'])
+            if 'p' in network_params:
+                G = nx.fast_gnp_random_graph(N, network_params['p'])
+            elif 'p_without_N' in network_params:
+                G = nx.fast_gnp_random_graph(N, network_params['p_without_N']/(N-1))
         else:
             G = nx.fast_gnp_random_graph(N, 3. / (N - 1))
         G.remove_nodes_from(list(nx.isolates(G)))
@@ -112,7 +115,7 @@ def process_gamma(G, J, network_params):
 
 def simulation_loop(nxIts, simIts, nI, N, gH, J, return_statuses, maxdays, num_tracers, pC2T, pQ, p2bCTs,
                     p2bRTs, positive_instantaneous, positive_induced, infected, recovered, to_trace_instantaneous, pCT,
-                    tlist_size, oracle=None, oracleTracer=None, return_full_data=True, network_type='poisson', network_params=None,
+                    tlist_size, oracle=None, oracleTracer=None, return_full_data=True, network_type='er', network_params=None,
                     infected_to_count=['I'], initial_infection_status='I', oracle_type=None, parallel=False,
                     num_nodes=0, reintroduction_nums=0, p2bPITs=dict(), pRT=1, **kwargs):
     '''
@@ -144,8 +147,8 @@ def simulation_loop(nxIts, simIts, nI, N, gH, J, return_statuses, maxdays, num_t
         if parallel:
             import multiprocessing
             from functools import partial
-            if network_type == 'poisson_gamma':
-                raise Exception('cannot run poisson_gamma in parallel!')
+            if network_type == 'er_gamma':
+                raise Exception('cannot run er_gamma in parallel!')
             func = partial(run_single_simulation, G, J, N, gH, infected, initial_infection_status, maxdays,
                                                                  nI, num_tracers, oracle, oracleTracer, oracle_type, p2bCTs,
                                                                  p2bRTs, pC2T, pCT, pQ, positive_induced,
@@ -157,7 +160,7 @@ def simulation_loop(nxIts, simIts, nI, N, gH, J, return_statuses, maxdays, num_t
         else:
             all_results = []
             for j in range(simIts):
-                if network_type == 'poisson_gamma':
+                if network_type == 'er_gamma':
                     G, J = process_gamma(G, J, network_params)
                 init_infections, results = run_single_simulation(G, J, N, gH, infected, initial_infection_status, maxdays,
                                                                  nI, num_tracers, oracle, oracleTracer, oracle_type, p2bCTs,

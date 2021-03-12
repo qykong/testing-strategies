@@ -71,7 +71,7 @@ mclapply(seq(jobs), function(i) {
                                                     np = str_interp('\'{"dist_file": "data/degree_distribution/new_params_R0_${varying_params$R0[k]}_beta_${beta}_gamma_${varying_params$rate_I2R[k] + varying_params$rate_I2Ho[k]}_k_${varying_params$dispersion[k]}.csv"}\'')))
                 } else {
                     network_params <- varying_params$R0[k]/(beta / (beta + varying_params$rate_I2R[k]))
-                    parameters <- c(parameters, list(nt = "poisson",
+                    parameters <- c(parameters, list(nt = "er",
                                                     np = str_interp('\'{"p": ${network_params/(N-1)}}\'')))
                 }
                 if (chosen_disease == 'SIR_with_Ho') {

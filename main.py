@@ -17,7 +17,7 @@ def str2bool(v):
         return False
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
-        
+
 class NpEncoder(json.JSONEncoder):
     '''
     customized json serializer that handles numpy objects
@@ -34,7 +34,7 @@ class NpEncoder(json.JSONEncoder):
 
 if __name__ == '__main__':
     # set up the first parser to get the required epidemic parameter file
-    p_params_file = argparse.ArgumentParser()
+    p_params_file = argparse.ArgumentParser(add_help=False)
     p_params_file.add_argument("-pf", "--parameter-file", required=True, type=str, help="A JSON file with epidemic parameters. This can either be a abstract model file or complete model file. For abstract, you need also provide the epidemic rates")
     args, _ = p_params_file.parse_known_args()
     parameter_filename = args.parameter_file
@@ -47,11 +47,11 @@ if __name__ == '__main__':
 
     tracing_parameters = json.load(open(DEFAULT_TRACING_PARAMS_FILE))
     population_parameters = json.load(open(DEFAULT_POPULATION_PARAMS_FILE))
-    
+
     # now we use a second argparse to check other required parameters
     p = argparse.ArgumentParser()
     p.add_argument("-seed", type=int, default=-1, help='seed (if not specified seed is random')
-    p.add_argument("-nt", "--network-type", type=str, default='poisson', help='specify the network simulator to use')
+    p.add_argument("-nt", "--network-type", type=str, default='er', help='specify the network simulator to use')
     p.add_argument("-np", "--network-params", type=str, default=None, help='specify the network parameter to use')
     p.add_argument("-oracle_type", type=str, default=None, help='type of oracle to use')
     p.add_argument("-num_tracers", type=int, default=0, help='number of tracers')
@@ -101,7 +101,7 @@ if __name__ == '__main__':
         if sta in all_status_histories[0]:
             statuses.append(sta)
     daily_counts = derive_daily_counts(all_status_histories, ts=ts, status_to_track=statuses)
-    
+
     if args.of is not None:
         # if an output file path is provided, then we save the simulattion
         res = {
